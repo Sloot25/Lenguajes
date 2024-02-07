@@ -5,12 +5,11 @@ Practica 1.
 
 ;; Ejercicio 1
 (define (area-total generatriz diametro)
-  (+ ( * pi generatriz (/ diametro 2)) (* pi (* (/ diametro 2) (/ diametro 2)))))
-; podriamos usar una variable para el radio dado que se repite 3 veces en la funcion 
+  (error "Sin implementar"))
+
 ;; Ejercicio 2
 (define (decremental? a b c d)
-  (if (and (> a b) (> b c) (> c d)) #t #f)
-  )
+  (error "Sin implementar"))
 
 ;; Ejercicio 3
 (define (area-heron a b c)
@@ -18,15 +17,22 @@ Practica 1.
 
 ;; Ejercicio 4
 (define (primera-letra s)
-  (error "Sin implementar"))
+  (if(char-alphabetic? (obtener-letra s))
+     (if(vocal?(obtener-letra s))"Vocal" "Consonante")
+     "Ingrese una cadena válida"))
+
+(define (vocal? letter)
+  (member letter '(#\a #\e #\i #\o #\u)))
+
+(define (obtener-letra str) (string-ref str 0))
 
 ;; Ejercicio 5
 (define (par? n)
-  (error "Sin implementar"))
+  (if (even? n)#t #f))
 
 ;; Ejercicio 6
 (define (impar? n)
-  (error "Sin implementar"))
+  (if (even? n)#f #t))
 
 ;; Ejercicio 7
 (define (en-rango-o-fuera? x a b)
