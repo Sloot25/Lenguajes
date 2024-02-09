@@ -5,12 +5,12 @@ Practica 1.
 
 ;; Ejercicio 1
 (define (area-total generatriz diametro)
-  (error "Sin implementar"))
-
+  (+ ( * pi generatriz (/ diametro 2)) (* pi (* (/ diametro 2) (/ diametro 2)))))
+; podriamos usar una variable para el radio dado que se repite 3 veces en la funcion 
 ;; Ejercicio 2
 (define (decremental? a b c d)
-  (error "Sin implementar"))
-
+  (if (and (> a b) (> b c) (> c d)) #t #f)
+  )
 ;; Ejercicio 3
 (define (area-heron a b c)
   (error "Sin implementar"))
@@ -36,7 +36,14 @@ Practica 1.
 
 ;; Ejercicio 7
 (define (en-rango-o-fuera? x a b)
-  (error "Sin implementar"))
+  (cond
+    [(and (mayorIgual x a) (mayorIgual b x)) #t]
+    [(or (< x (- a 10)) (> x (+ a 10))) #t]
+    [else #f]
+    ))
+
+(define (mayorIgual a b)
+  (if (or (= a b) (> a b)) #t #f))
 
 ;; Ejercicio 8
 (define (calculadora operacion n m)
