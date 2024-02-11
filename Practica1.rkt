@@ -13,8 +13,8 @@ Practica 1.
   )
 ;; Ejercicio 3
 (define (area-heron a b c)
-  (error "Sin implementar"))
-
+  (let ([y (/ (+ a b c) 2)]) (sqrt (* (* y (- y a)) (* (- y b) (- y c))))))
+  
 ;; Ejercicio 4
 (define (primera-letra s)
   (if(char-alphabetic? (obtener-letra s))
@@ -47,4 +47,10 @@ Practica 1.
 
 ;; Ejercicio 8
 (define (calculadora operacion n m)
-  (error "Sin implementar"))
+  (match operacion
+    ["first" n]
+    ["second" m]
+    ["sum" (+ n m)]
+    ["mul" (* n m)]
+    ["div-exact" (quotient n m)]
+    ["div" (/ n m)]))
