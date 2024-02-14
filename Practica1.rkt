@@ -1,11 +1,16 @@
 #lang plai
 #|
 Practica 1.
+Profesora Karla Ramírez Pulido
+Ayudante de laboratorio José Eliseo Ortíz Montaño
+Alumnos Etni Sarai Castro Sierra, Hugo Osvaldo Paniagua Broca y Diego Jesús Vidal Aguilar 
+Grupo: 7092
 |#
 
 ;; Ejercicio 1
 (define (area-total generatriz diametro)
   (+ ( * pi generatriz (/ diametro 2)) (* pi (* (/ diametro 2) (/ diametro 2)))))
+
 ; podriamos usar una variable para el radio dado que se repite 3 veces en la funcion 
 ;; Ejercicio 2
 (define (decremental? a b c d)
@@ -17,14 +22,16 @@ Practica 1.
   
 ;; Ejercicio 4
 (define (primera-letra s)
-  (if(char-alphabetic? (obtener-letra s))
-     (if(vocal?(obtener-letra s))"Vocal" "Consonante")
+  (if(char-alphabetic? (obtener-caracter s))
+     (if(vocal?(obtener-caracter s))"Vocal" "Consonante")
      "Ingrese una cadena válida"))
 
+;;Función adicional para ver si es vocal o consonante una letra
 (define (vocal? letter)
   (member letter '(#\a #\e #\i #\o #\u)))
 
-(define (obtener-letra str) (string-ref str 0))
+;;Función adicional para obtener el primer caracter de una cadena
+(define (obtener-caracter str) (string-ref str 0))
 
 ;; Ejercicio 5
 (define (par? n)
@@ -42,6 +49,7 @@ Practica 1.
     [else #f]
     ))
 
+;; Función adicional que revisa si un número es mayor o igual al otro 
 (define (mayorIgual a b)
   (if (or (= a b) (> a b)) #t #f))
 
