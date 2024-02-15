@@ -34,8 +34,9 @@ Grupo: 7092
 (define (obtener-caracter str) (string-ref str 0))
 
 ;; Ejercicio 5
-(define (par? n)
-  (if (even? n)#t #f))
+(define (par? num)
+  (= (modulo num 2) 0))
+
 
 ;; Ejercicio 6
 (define (impar? n)
