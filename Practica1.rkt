@@ -39,8 +39,8 @@ Grupo: 7092
 
 
 ;; Ejercicio 6
-(define (impar? n)
-  (if (even? n)#f #t))
+(define (par? num)
+  (not(= (modulo num 2) 0)))
 
 ;; Ejercicio 7
 (define (en-rango-o-fuera? x a b)
