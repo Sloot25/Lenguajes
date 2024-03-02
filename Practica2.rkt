@@ -5,7 +5,7 @@ Practica 2.
 
 ;; Ejercicio 1
 (define (mapea func ls)
-  (error "Sin implementar"))
+  (if (empty? ls) ls (cons (func (first ls)) (mapea func (rest ls)))))
 
 ;; Ejercicio 2
 (define (get-by-index index ls)
