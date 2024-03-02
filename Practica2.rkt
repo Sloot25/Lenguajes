@@ -78,7 +78,7 @@ Practica 2.
 ;; Ejercicio 6c
  (define (filtrar-arbol ar pred)
   (cond
-    [(vacio? ar) vacio]
+    [(vacio? ar) ar]
     [(nodo? ar) (if (pred (nodo-elem ar))
                     (nodo (nodo-elem ar) (filtrar-arbol (nodo-izq ar) pred) (filtrar-arbol (nodo-der ar) pred))
                     (elimina (nodo (nodo-elem ar) (filtrar-arbol (nodo-izq ar) pred) (filtrar-arbol (nodo-der ar) pred)) (nodo-elem ar)))]
