@@ -1,6 +1,10 @@
 #lang plai
 #|
 Practica 2.
+Profesora Karla Ramírez Pulido
+Ayudante de laboratorio José Eliseo Ortíz Montaño
+Alumnos Etni Sarai Castro Sierra, Hugo Osvaldo Paniagua Broca y Diego Jesús Vidal Aguilar 
+Grupo: 7092
 |#
 
 ;; Ejercicio 1
@@ -47,6 +51,7 @@ Practica 2.
   [(nodo? ar) (if (< (nodo-elem ar) el) (nodo (nodo-elem ar) (nodo-izq ar) (addElem (nodo-der ar) el))
                   (nodo (addElem (nodo-izq ar) el) (nodo-der ar)))]
   [else (error "El arbol ingresado no es un arbol de busqueda")]))
+
 ;; Ejercicio 6a
 (define (elimina ar el)
   (cond
