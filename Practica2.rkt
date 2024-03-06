@@ -8,10 +8,14 @@ Grupo: 7092
 |#
 
 ;; Ejercicio 1
+;; Recibe una función y una lista, y devuelve una lista con el resultado de aplicar la función a cada elemento de la lista original.
+
 (define (mapea func ls)
   (if (empty? ls) ls (cons (func (first ls)) (mapea func (rest ls)))))
 
 ;; Ejercicio 2
+;; Recibe un índice y una lista, y devuelve el elemento de la lista que se encuentre en ese índice.
+
 (define (get-by-index index ls)
   (cond
     [(< index 0) (error "El indice no puede ser menor que 0")]
@@ -21,11 +25,14 @@ Grupo: 7092
 
 ;; Ejercicio 3
 ;; Define el tipo Figura aquí.
+
 (define-type Figura
   [cuadrado (lado number?)]
   [circulo (diametro number?)])
 
 ;; Ejercicio 4
+;; Calcula el área de la figura
+
 (define (area figura)
   (cond
   [(cuadrado? figura) (* (cuadrado-lado figura) (cuadrado-lado figura))]
@@ -33,6 +40,8 @@ Grupo: 7092
   [else (error "El parametro recibido no es del tipo figura")]))
 
 ;; Ejercicio 5
+;; Calcula el perímetro de la figura
+
 (define (perimetro figura)
   (cond
   [(cuadrado? figura) (* 4 (cuadrado-lado figura))]
@@ -40,6 +49,7 @@ Grupo: 7092
   [else (error "El parametro recibido no es del tipo figura")]))
 
 ;; Ejercicio 6
+;; Definicion del arbol de busqueda
 
 (define-type ArbolDeBusqueda
   [vacio]
@@ -53,6 +63,8 @@ Grupo: 7092
   [else (error "El arbol ingresado no es un arbol de busqueda")]))
 
 ;; Ejercicio 6a
+;; Definición de eliminar en el arbold ebúsqueda
+
 (define (elimina ar el)
   (cond
     [(vacio? ar) vacio]
@@ -61,7 +73,9 @@ Grupo: 7092
                    [(< (nodo-elem ar) el)  (nodo (nodo-elem ar) (nodo-izq ar) (elimina (nodo-der ar) el))]
                    [else (nodo (nodo-elem ar) (elimina (nodo-izq ar) el) (nodo-der ar))]) ]
     [else (error "No has pasado un arbol como parametro")]))
+
 #|La funcion no recibe arboles vacios, es solo una funcion auxiliar |#
+
 (define (eliminaMaximo ar)
   (cond
     [(vacio? (nodo-der ar)) (nodo-izq ar)]
@@ -72,6 +86,8 @@ Grupo: 7092
     [else (buscaMaximo (nodo-der ar))]))
 
 ;; Ejercicio 6b
+;; Verifica si está el elemento en el arbol binario
+
 (define (contiene? ar el)
   (cond
     [(vacio? ar) #f]
@@ -81,6 +97,8 @@ Grupo: 7092
     [else (error "No has ingresado un arbol binario de busqueda")]))
 
 ;; Ejercicio 6c
+;; devuelve un árbol que contiene todos los elementos del original que cumplen con el predicado.
+
  (define (filtrar-arbol ar pred)
   (cond
     [(vacio? ar) ar]
