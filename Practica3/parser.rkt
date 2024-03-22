@@ -48,7 +48,7 @@
   (let ([cabeza (car s-expr)])
     (match cabeza
       ['modulo (op modulo (list (parse (second s-expr)) (parse (third s-expr))))]
-      ['expt (op expt (list(parse (second s-expr) (third s-expr))))])))
+      ['expt (op expt (list (parse (second s-expr)) (parse (third s-expr))))])))
 
 (define (pertenece l e)
   (cond
@@ -71,6 +71,12 @@
           [(not (= (length par) 2)) (error "Hay una variable libre")]
           [else (cons (binding (first par) (parse (second par))) (asignarWithEstrellita (rest s-expr) ))]))))
 
+(define (myOr args)
+  (ormap (lambda (x) x) args))
+
+(define (myAnd args)
+  (andmap (lambda (x) x) args))
+
 (define (multiaridad s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
@@ -80,11 +86,13 @@
       ['* (op * (map parse (rest s-expr)))]
       ['min (op min (map parse (rest s-expr)))]
       ['max (op max (map parse (rest s-expr)))]
+      ['and (op myAnd (map parse (rest s-expr)))]
       ['< (op < (map parse (rest s-expr)))]
       ['> (op > (map parse (rest s-expr)))]
       ['<= (op <= (map parse (rest s-expr)))]
       ['>= (op >= (map parse (rest s-expr)))]
       ['= (op = (map parse (rest s-expr)))]
+      ['or (op myOr (map parse (rest s-expr)))]
       ['with (with
               (asignarWith (second s-expr) '()) (parse (third s-expr)))]
       ['with* (with* (asignarWithEstrellita (second s-expr)) (parse (third s-expr)))]
