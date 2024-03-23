@@ -61,7 +61,7 @@
                        [(= 1 (length args))
                         (cond
                           [(or (equal? - f) (equal? sqrt f) (equal? f sub1) (equal? f add1) (equal? f not)
-                               (equal? f zero?) (equal? f number? ) (equal? f string?) (equal? f bool?)
+                               (equal? f zero?) (equal? f number? ) (equal? f string?) (equal? f boolean?)
                                (equal? f string-length) (equal? f string-first)) (f (interp(first args)))]
                           [else (interp(first args))])]
                        [(equal? f myOr) (f (map interp args))]
@@ -73,10 +73,13 @@
                           [(equal? > f) (> (interp (first args)) (interp (op max (rest args))))]
                           [(equal? >= f) (>= (interp (first args)) (interp (op max (rest args))))]
                           [(equal? = f) (myEqual args)]
+                          [(equal? / f) (myDivision args)]
                           [else (f (interp (first args)) (interp (op f (rest args))))])])]
     [with (args cuerpo) (interp (interpWith args cuerpo))]
     [with* (args cuerpo) (interp (interpWithEstrellita args cuerpo))]))
-
+(define (myDivision args)
+  (if (= (length args) 2) (/ (interp (first args)) (interp (second args)))
+      (* (interp (first args)) (myDivision (rest args)))))
 (define (myEqual args)
   (cond
     [(empty? args) #t]

@@ -34,11 +34,13 @@
       ['zero? (op zero? (list(parse (second s-expr))))] ;; Estas declaraciones pueden estar mal 
       ['num? (op number? (list (parse (second s-expr))))]
       ['str? (op string? (list (parse (second s-expr))))]
-      ['bool? (op bool? (list (parse (second s-expr))))]
+      ['bool? (op boolean? (list (parse (second s-expr))))]
       ['str-length (op string-length (list (parse (second s-expr))))]
       ['str-first (op string-first (list (parse (second s-expr))))]
       ['str-last (op string-last (list (parse (second s-expr))))]
       )))
+
+
 
 (define (string-first str)
   (error "hola"))

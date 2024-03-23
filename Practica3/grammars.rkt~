@@ -6,7 +6,7 @@
 (define-type WAE
   [id (literal symbol?)]
   [num (literal number?)]
-  [bool (literal boolean?)]
+  [bool (lieteral boolean?)]
   [str (literal string?)]
   [op (operator procedure?) (args (listof WAE?))]
   [with (assigns (listof Binding?)) (body WAE?)]
