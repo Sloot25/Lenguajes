@@ -25,13 +25,20 @@
       (type-case Binding (first args)
         [binding (with-id with-value) (if (equal? with-id sub-id) #t (idRepetido (rest args) sub-id))])))
 
+(define (cleanMap args)
+    (if (empty? args) '()
+        (if (WAE? (first args))
+            (cons (first args) (cleanMap (rest args)))
+            (cons (parse (first args)) (cleanMap (rest args))))))
+
 (define (subst sub-id value expr)
   (type-case WAE expr
-    [id (x) (if (equal? x sub-id) (parse value) (id x))]
+    [id (x) (if (equal? x sub-id) value (id x))]
     [num (x) (num x)]
     [bool (x) (bool x)]
     [str (x) (str x)]
-    [op (f args) (op f (map (lambda (ex) (subst sub-id value ex)) args))]
+    ;;[op (f args) (op f (map (lambda (ex) (subst sub-id value ex)) args))] ;; Si le pones (parse value) al id se arregla esto, pero se jode el subs
+    [op (f args) (op f (cleanMap (map (lambda (ex) (subst sub-id value ex)) args)))]
     [with (args cuerpo) (if (idRepetido args sub-id)
                             (with (substWith args cuerpo sub-id value) cuerpo)
                             (with (substWith args cuerpo sub-id value) (subst sub-id value cuerpo))
@@ -80,9 +87,9 @@
 (define (interpWith args cuerpo)
   (if (empty? args) cuerpo
       (type-case Binding (first args)
-        [binding (with-id with-value) (interpWith (rest args) (subst with-id (interp with-value) cuerpo))]
+        [binding (with-id with-value) (interpWith (rest args) (subst with-id with-value cuerpo))]
         )))
 (define (interpWithEstrellita args cuerpo)
   (if (empty? args) cuerpo
       (type-case Binding (first args)
-        [binding (with-id with-value) (interpWithEstrellita (substWithEstrellita (rest args) cuerpo with-id (interp with-value)) (subst with-id (interp with-value) cuerpo))])))
+        [binding (with-id with-value) (interpWithEstrellita (substWithEstrellita (rest args) cuerpo with-id with-value) (subst with-id with-value cuerpo))])))
