@@ -46,7 +46,7 @@
 ;; Tipo del valor de retorno: number ó boolean ó string
 (define (interp expr)
   (type-case WAE expr
-    [id (x) (error "Variable libre")]
+    [id (x) (error  "Variable libre")]
     [num (x) x]
     [bool (x) x]
     [str (x) x]
@@ -68,7 +68,7 @@
                           [(equal? = f) (myEqual args)]
                           [else (f (interp (first args)) (interp (op f (rest args))))])])]
     [with (args cuerpo) (interp (interpWith args cuerpo))]
-    [with* (args cuerpo) (interp (interpWith args cuerpo))]))
+    [with* (args cuerpo) (interp (interpWithEstrellita args cuerpo))]))
 
 (define (myEqual args)
   (cond
@@ -82,3 +82,7 @@
       (type-case Binding (first args)
         [binding (with-id with-value) (interpWith (rest args) (subst with-id (interp with-value) cuerpo))]
         )))
+(define (interpWithEstrellita args cuerpo)
+  (if (empty? args) cuerpo
+      (type-case Binding (first args)
+        [binding (with-id with-value) (interpWithEstrellita (substWithEstrellita (rest args) cuerpo with-id (interp with-value)) (subst with-id (interp with-value) cuerpo))])))
