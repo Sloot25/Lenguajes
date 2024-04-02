@@ -24,6 +24,8 @@
                         (multiaridad s-expr))]
               ))]))
 
+;; Define el parámetro que deben de tomar las funciones
+;; Listado de funciones sub1, add1, sqrt, not, zero?. number?.string, boolean, string-length, string-first, string-last
 (define (aridaduno s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
@@ -40,24 +42,28 @@
       ['str-last (op string-last (list (parse (second s-expr))))]
       )))
 
-
-
+;; FALTA
 (define (string-first str)
   (error "hola"))
+
+;; FALTA
 (define (string-last str)
   (error "adios"))
+
 (define (aridaddos s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
       ['modulo (op modulo (list (parse (second s-expr)) (parse (third s-expr))))]
       ['expt (op expt (list (parse (second s-expr)) (parse (third s-expr))))])))
 
+;; Revisa si la expresion 'e' se encuentra en algun elemento de la lista 'l'
 (define (pertenece l e)
   (cond
     [(empty? l) #f]
     [(equal? e (first l)) #t]
     [else (pertenece (rest l) e)]))
 
+;; Ayuda a desarollar y definir la variable y el cuerpo del with 
 (define (asignarWith s-expr carga)
   (if (empty? s-expr) '()
       (let ([par (first s-expr)])
@@ -66,6 +72,7 @@
           [(pertenece carga (first par)) (error "La variable ya ha sido declarada")]
           [else (cons (binding (first par) (parse (second par))) (asignarWith (rest s-expr) (cons (first par) carga)))])))) 
 
+;; Desarolla el multiwith de la s-expr que recibe como argumento.
 (define (asignarWithEstrellita s-expr)
   (if (empty? s-expr) '()
       (let ([par (first s-expr)])
@@ -73,12 +80,15 @@
           [(not (= (length par) 2)) (error "Hay una variable libre")]
           [else (cons (binding (first par) (parse (second par))) (asignarWithEstrellita (rest s-expr) ))]))))
 
+;; Define el funcionamiento de un ormap para los elementos del args
 (define (myOr args)
   (ormap (lambda (x) x) args))
 
+;; Define el funcionamiento de un anmap para los elementos del args
 (define (myAnd args)
   (andmap (lambda (x) x) args))
 
+;; Revisa que la aridad d ela operaci
 (define (multiaridad s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
