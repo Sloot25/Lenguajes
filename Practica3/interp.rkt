@@ -15,22 +15,31 @@
                                           (cons (binding with-id (subst sub-id value with-value)) (rest args))
                                           (cons (binding with-id (subst sub-id value with-value)) (substWithEstrellita (rest args) cuerpo sub-id value)))
                  ])))
+
+;; Encargada de sustituir segun las variables ligadas dentro del with.
+;; Recibe la variable de ligado y el valor que va a sustituir
 (define (substWith args cuerpo sub-id value)
   (if (empty? args) '()
       (type-case Binding (first args)
         [binding (with-id with-value) (cons (binding with-id (subst sub-id value with-value)) (substWith (rest args) cuerpo sub-id value))])))
             
-(define (idRepetido args sub-id)
+
+;; Revisa si un id determinado (parametro de la funcion) esta repetido en la lista
+;; Recibe como parametro el id a ver si esta repetido
+define (idRepetido args sub-id)
   (if (empty? args) #f
       (type-case Binding (first args)
         [binding (with-id with-value) (if (equal? with-id sub-id) #t (idRepetido (rest args) sub-id))])))
 
+
+;; Limpia y deja a args sin ningun elemento dentro de el.
 (define (cleanMap args)
     (if (empty? args) '()
         (if (WAE? (first args))
             (cons (first args) (cleanMap (rest args)))
             (cons (parse (first args)) (cleanMap (rest args))))))
 
+;; Sustituye segun el id el valor con el "value expr" que se le dotó
 (define (subst sub-id value expr)
   (type-case WAE expr
     [id (x) (if (equal? x sub-id) value (id x))]
@@ -53,7 +62,7 @@
 ;; Tipo del valor de retorno: number ó boolean ó string
 (define (interp expr)
   (type-case WAE expr
-    [id (x) (error  "Variable libre")]
+    [id (x) (error  "Variable libre")] ;; Identifica a una variable libre
     [num (x) x]
     [bool (x) x]
     [str (x) x]
@@ -77,9 +86,13 @@
                           [else (f (interp (first args)) (interp (op f (rest args))))])])]
     [with (args cuerpo) (interp (interpWith args cuerpo))]
     [with* (args cuerpo) (interp (interpWithEstrellita args cuerpo))]))
+
+;; Divide al penultimo elemento del args entre el ultimo y a este resultado lo multiplica por el resto de los elementos del args
 (define (myDivision args)
   (if (= (length args) 2) (/ (interp (first args)) (interp (second args)))
       (* (interp (first args)) (myDivision (rest args)))))
+
+;; Revisa si todos los argumentos son iguales
 (define (myEqual args)
   (cond
     [(empty? args) #t]
@@ -87,11 +100,14 @@
     [(= (interp (first args)) (interp (second args))) (myEqual (rest args))]
     [else #f]))
 
+;; Hace las sustituciones necesarias dentro el cuerpo del with
 (define (interpWith args cuerpo)
   (if (empty? args) cuerpo
       (type-case Binding (first args)
         [binding (with-id with-value) (interpWith (rest args) (subst with-id with-value cuerpo))]
         )))
+
+;; Hace las sustituciones necesarias por el cuerpo del multiwith
 (define (interpWithEstrellita args cuerpo)
   (if (empty? args) cuerpo
       (type-case Binding (first args)
