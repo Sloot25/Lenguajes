@@ -42,13 +42,13 @@
       ['str-last (op string-last (list (parse (second s-expr))))]
       )))
 
-;; FALTA
+;; Regresa el primer caracter de un string 
 (define (string-first str)
-  (error "hola"))
+  (string-ref str 0))
 
-;; FALTA
+;; Regresa el ultimo caracter de un string
 (define (string-last str)
-  (error "adios"))
+  (string-ref str (- (string-length str) 1)))
 
 (define (aridaddos s-expr)
   (let ([cabeza (car s-expr)])
