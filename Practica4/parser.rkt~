@@ -1,0 +1,7 @@
+#lang plai
+
+(require "grammars.rkt")
+
+;; parse :: s-exp -> CFSBWAE
+(define (parse s-exp)
+  (error 'parse "Sin implementar"))
