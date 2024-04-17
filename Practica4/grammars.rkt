@@ -6,7 +6,7 @@
 (define-type Condition
   [condition  (test-expr CFSBWAE?) (then-expr CFSBWAE?)])
 
-;; Lenguaje con azucar sintactica
+;; Lenguaje con azucar sintactica-
 (define-type CFSBWAE
   [numS (literal number?)]
   [idS (literal symbol?)]
@@ -20,6 +20,8 @@
   [iFS (test-expr CFSBWAE?) (then-expr CFSBWAE?) (else-expr CFSBWAE?)]
   [conDS (conds (listof Condition?)) (else-expr CFSBWAE?)])
 
+
+;; Lenguaje con las definiciones necesarias para implementar los árboles de sintaxis abstracta.
 (define-type CFSBAE
   [num (literal number?)]
   [id (literal symbol?)]
