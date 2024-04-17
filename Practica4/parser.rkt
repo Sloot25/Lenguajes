@@ -53,6 +53,7 @@
 (define (string-last str)
   (string-ref str (- (string-length str) 1)))
 
+;; Definición necesaria para cuando tenemos aridad 2.
 (define (aridaddos s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
@@ -116,16 +117,22 @@
       ['cond (conDS (conditionParser (rest s-expr)) (getElse (rest s-expr)))]
       [else (appS (parse cabeza) (myMap (rest s-expr)))]
       )))
+
+;;Revisa y limpia los id's duplicados en nuestra s-expresión.
 (define (limpFun s-expr)
   (if (check-duplicates s-expr) (error "Hay IDs Duplicados")
       s-expr))
+
+;; Revisa si la expresión es vacia para saber si hace el parseo con la cabeza o solamente opera con '() 
 (define (myMap s-expr)
   (if (empty? s-expr) '()
       (cons (parse (first s-expr)) (myMap (rest s-expr)))))
+
 (define (conditionParser s-expr)
   (if (equal? 'else (first (first s-expr))) '()
       (let ([cabeza (first s-expr)])
         (cons (condition (parse (first cabeza)) (parse (second cabeza))) (conditionParser (rest s-expr))))))
+;; Buscador de la sentencia de control "Else"
 (define (getElse s-expr)
   (if (equal? 'else (first (first s-expr))) (parse (second (first s-expr)))
       (getElse (rest s-expr))))
