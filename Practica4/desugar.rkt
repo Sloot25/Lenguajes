@@ -22,7 +22,7 @@
                                      (if (= 1 (length conds)) (iF (desugar test) (desugar then) (desugar else))
                                          (iF (desugar test) (desugar then) (desugar (conDS (rest conds) else))))])]))
 
-;; Funciónm auxiliar de desugar que nos permite quitarle la azucar sintáctica a los bindings para posetriormente transformarlas de CFSBWAE -> CFSBAE 
+;; Función auxiliar de desugar que nos permite quitarle la azucar sintáctica a los bindings para posetriormente transformarlas de CFSBWAE -> CFSBAE 
 (define (desugarWith bindings)
   (if (empty? bindings) '()
       (let ([bi (first bindings)])
