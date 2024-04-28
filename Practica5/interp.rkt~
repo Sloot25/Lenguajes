@@ -1,0 +1,11 @@
+#lang plai
+
+(require (file "./grammars.rkt"))
+
+;; interp :: CFSBAE, Env -> Value
+(define (interp ast env)
+  (error 'interp "Sin implementar"))
+
+;; lookup :: symbol, Env -> Value
+(define (lookup search-id env)
+  (error 'lookup "Sin implementar"))
