@@ -2,7 +2,8 @@
 
 (require (file "./grammars.rkt"))
 (require (file "./parser.rkt"))
-;; No supe como escribir el map
+
+;; Definicion de diccionario (map)
 (define (myMapInterp lista env acc)
   (if (empty? lista) acc
   (myMapInterp (rest lista) env (cons (value->primitive (interp (first lista) env)) acc))))
@@ -46,6 +47,7 @@
                             
     [iF (test then else) (if (value->primitive (interp test env)) (interp then env) (interp else env))]
     ))
+
 ;; Divide al penultimo elemento del args entre el ultimo y a este resultado lo multiplica por el resto de los elementos del args
 (define (myDivision args env)
   (if (= (length args) 2) (/ (value->primitive(interp (first args) env)) (value->primitive (interp (second args) env)))
@@ -58,6 +60,7 @@
     [(= 1 (length args)) #t]
     [(= (value->primitive (interp (first args) env)) (value->primitive (interp (second args) env))) (myEqual (rest args))]
     [else #f]))
+
 ;; lookup :: symbol, Env -> Value
 (define (lookup search-id env)
   (type-case Env env
@@ -65,7 +68,7 @@
     [cons-env (identificador valor restante) (if (equal? search-id identificador)
                                                   valor
                                                   (lookup search-id restante))]))
-
+;; Definicion de primitiva
 (define (primitive->Value p)
   (cond
     [(number? p) (numV p)]
