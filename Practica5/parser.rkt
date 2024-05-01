@@ -46,10 +46,11 @@
 (define (string-first str)
   (string-ref str 0))
 
-;; Regresa el ultimo caracter de un string
+;; Regresa el el resto de la cadena menos el primer caracter 
 (define (string-last str)
   (string-ref str (- (string-length str) 1)))
 
+;; Define operaciones de aridad 2
 (define (aridaddos s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
