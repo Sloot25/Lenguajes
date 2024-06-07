@@ -2,7 +2,7 @@
 
 (require "grammars.rkt")
 (require "parser.rkt")
-(require rebellion/base/converter )
+;;(require rebellion/base/converter )
 
 
 ;; Funcion quje nos permite hacer el mapeo
@@ -16,7 +16,7 @@
     [id (x) (lookup x env)]
     [num (numero) (numV numero)]
     [bool (lit) (boolV lit)]
-    [str (s) (strV s)]
+     [str (s) (strV s)]
     [op (f args) (cond
                    [(= 1 (length args))
                         (cond
@@ -45,7 +45,8 @@
                                       (interp cuerpoClosure envClosure)
                                       (error 'interp "Argumentos no corresponden a los de la funcion"))
                                   (interp (app (fun (rest paramsClosure) cuerpoClosure) (rest args))
-                                                    (cons-env (first paramsClosure ) (interp (first args) env) envClosure))))]
+                                                    (cons-env (first paramsClosure ) (interp (first args) env) envClosure)))
+                          )]
                                   ;;(interp (app (fun (rest paramsClosure) (parse (interp cuerpoClosure
                                     ;;                                                   (cons-env (first paramsClosure) (interp (first args) envClosure) envClosure)))) (rest args)) envClosure)))]
     [iF (test then else) (if (value->primitive (interp test env)) (interp then env) (interp else env))]
@@ -53,7 +54,14 @@
                        (interp body nuevoAmbiente))]
     ))
 
-;; Revisa los Bindings 
+(define (nuevoAmbienteAppFuncion parametros argumentos env)
+  (cond
+    [(and (empty? parametros) (empty? argumentos)) env]
+    [(or (empty? parametros) (empty? argumentos)) (error 'interp "Argumentos no corresponden a los de la funcion")]
+    [else (nuevoAmbienteAppFuncion (rest parametros) (rest argumentos) (cons-env (first parametros) (interp (first argumentos) env) env))]
+    ))
+
+
 (define (interpBindingsCyclically list env)
   (if (empty? list) env
       (type-case Binding (first list)
@@ -77,7 +85,8 @@
 ;; lookup :: symbol, Env -> Value
 (define (lookup search-id env)
   (type-case Env env
-    [mt-env () (error 'interp (string-append "Variable libre " (convert-backward string<->symbol search-id)))]
+    ;;[mt-env () (error 'interp (string-append "Variable libre " (convert-backward string<->symbol search-id)))]
+    [mt-env () (error 'interp "Variable libre ~a" search-id)]
     [cons-env (identificador valor restante) (if (equal? search-id identificador)
                                                   valor
                                                   (lookup search-id restante))]
