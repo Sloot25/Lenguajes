@@ -50,6 +50,7 @@
 (define (string-last str)
   (string-ref str (- (string-length str) 1)))
 
+;; Revisa las expresionmes de aridad 2
 (define (aridaddos s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
@@ -71,7 +72,7 @@
 (define (myAnd args)
   (andmap (lambda (x) x) args))
 
-;; Revisa que la aridad d ela operaci
+;; Revisa que la aridad de la operacion cuadre con su operador
 (define (multiaridad s-expr)
   (let ([cabeza (car s-expr)])
     (match cabeza
@@ -94,6 +95,7 @@
       [else (app (parse cabeza) (myMap (rest s-expr)))]
       )))
 
+;; Revisa que todas las variables esten ligadas dentro de la expresion
 (define (parserRec s-expr)
   (if (empty? s-expr) '()
       (let ([par (first s-expr)])
@@ -101,10 +103,12 @@
           [(not (= (length par) 2)) (error "Hay una variable libre")]
           [else (cons (binding (first par) (parse (second par))) (parserRec (rest s-expr)))]))))
 
-
+;; Revisa si hya Id's duplicados
 (define (limpFun s-expr)
   (if (check-duplicates s-expr) (error "Hay IDs Duplicados")
       s-expr))
+
+;; Funcion para poder hacer el mapeo de la s-expression dada
 (define (myMap s-expr)
   (if (empty? s-expr) '()
       (cons (parse (first s-expr)) (myMap (rest s-expr)))))
