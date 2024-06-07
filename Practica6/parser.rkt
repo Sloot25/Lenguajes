@@ -103,7 +103,7 @@
           [(not (= (length par) 2)) (error "Hay una variable libre")]
           [else (cons (binding (first par) (parse (second par))) (parserRec (rest s-expr)))]))))
 
-;; Revisa si hya Id's duplicados
+;; Revisa si hay Id's duplicados
 (define (limpFun s-expr)
   (if (check-duplicates s-expr) (error "Hay IDs Duplicados")
       s-expr))
