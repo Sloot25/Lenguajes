@@ -5,10 +5,11 @@
 (require rebellion/base/converter )
 
 
-;; No supe como escribir el map
+;; Funcion quje nos permite hacer el mapeo
 (define (myMapInterp lista env acc)
   (if (empty? lista) acc
   (myMapInterp (rest lista) env (cons (value->primitive (interp (first lista) env)) acc))))
+
 ;; RCFSBAE x Env -> RCFSBAE-Val
 (define (interp ast env)
    (type-case RCFSBAE ast
@@ -52,8 +53,7 @@
                        (interp body nuevoAmbiente))]
     ))
 
-
-
+;; Revisa los Bindings 
 (define (interpBindingsCyclically list env)
   (if (empty? list) env
       (type-case Binding (first list)
@@ -72,6 +72,7 @@
     [(= 1 (length args)) #t]
     [(= (value->primitive (interp (first args) env)) (value->primitive (interp (second args) env))) (myEqual (rest args))]
     [else #f]))
+
 ;; symbol x Env -> RCFSBAE-Val
 ;; lookup :: symbol, Env -> Value
 (define (lookup search-id env)
@@ -84,11 +85,13 @@
                                    (unbox box)
                                    (lookup search-id restEnv))]))
 
+;; Revisa si cumple las primitivas deseadas
 (define (primitive->Value p)
   (cond
     [(number? p) (numV p)]
     [(boolean? p) (boolV p)]))
 
+;; Revisa que sea un valor esperado, si no devuelve error 
 (define (value->primitive p)
   (type-case Value p
     [numV (x) x]
