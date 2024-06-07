@@ -103,7 +103,7 @@
 (test (prueba '{rec {{x 5} {y 1}} {+ x y}}) (numV 6))
 (test (prueba '{rec {{x 5} {y {+ x 1}}} {+ x y}}) (numV 11))
 (test (prueba'{rec {{a 2} {b {+ a a}}} b}) (numV 4))
-(test/exn (prueba'{{fun {y x} x} 1 y}) "interp: Variable libre y")
+(test/exn (prueba'{{fun {y x} x} 1 y}) "interp: Variable libre y") ;; Creo que el test es alreves, ya que se lanza la misma excepcion con los parametros y argumentos invertidos
 (test/exn (prueba '{rec {{x y} {y 1}} x}) "interp: Variable libre y")
 (test (prueba'{rec ([x 2] [y 1] [z 3]) (/ x y z)}) (numV 2/3))
 
